@@ -1,0 +1,24 @@
+# Build artifacts
+target/
+*.class
+*.war
+*.ear
+*.jar
+
+# IDE files
+.settings/
+.project
+.classpath
+.metadata/
+.idea/
+*.iml
+*.iws
+*.ipr
+bin/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Database secrets (si vous aviez des fichiers de config sensibles)
+# config/db_passwords.txt

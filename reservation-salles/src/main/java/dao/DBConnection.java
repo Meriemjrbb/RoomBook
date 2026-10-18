@@ -5,25 +5,26 @@ import java.sql.DriverManager;
 
 public class DBConnection {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/reservation_salles?useSSL=false&serverTimezone=UTC";
-    private static final String USER = "root"; 
-    private static final String PASSWORD = "1234"; // mets ton mot de passe si tu en as
+    // Lus depuis les variables d'environnement (production) ; valeurs locales par défaut
+    private static final String URL = env("DB_URL",
+            "jdbc:mysql://localhost:3306/reservation_salles?useSSL=false&serverTimezone=UTC");
+    private static final String USER = env("DB_USER", "root");
+    private static final String PASSWORD = env("DB_PASSWORD", "1234");
+
+    private static String env(String key, String defaultValue) {
+        String v = System.getenv(key);
+        return (v == null || v.isBlank()) ? defaultValue : v;
+    }
 
     public static Connection getConnection() {
         Connection connection = null;
-
         try {
-            // Charger le driver JDBC
             Class.forName("com.mysql.cj.jdbc.Driver");
-
-            // Obtenir la connexion
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
             System.out.println("✔ Connexion réussie à MySQL !");
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("❌ Erreur de connexion : " + e.getMessage());
         }
-
         return connection;
     }
 }
